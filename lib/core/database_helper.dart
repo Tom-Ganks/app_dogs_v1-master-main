@@ -23,19 +23,19 @@ class DatabaseHelper {
 
         await db.execute('CREATE TABLE login('
             'id INTEGER PRIMARY KEY, '
-            'usuario TEXT NOT NULL UNIQUE, '
-            'senha TEXT NOT NULL, '
-            'id_pessoa INTEGER NOT NULL UNIQUE, '
-            'FOREIGN KEY (id_pessoa) REFERENCES pessoa(id))');
+            'login TEXT NOT NULL UNIQUE, '
+            'password TEXT NOT NULL, '
+            'idpessoa INTEGER NOT NULL UNIQUE, '
+            'FOREIGN KEY (idpessoa) REFERENCES pessoa(id))');
       },
       version: 2,
       onUpgrade: (db, oldVersion, newVersion) async {
         if (oldVersion < 2) {
           await db.execute('CREATE TABLE login('
               'id INTEGER PRIMARY KEY, '
-              'usuario TEXT NOT NULL UNIQUE, '
-              'senha TEXT NOT NULL, '
-              'id_pessoa INTEGER NOT NULL UNIQUE, '
+              'login TEXT NOT NULL UNIQUE, '
+              'password TEXT NOT NULL, '
+              'idpessoa INTEGER NOT NULL UNIQUE, '
               'FOREIGN KEY (id_pessoa) REFERENCES pessoa(id))');
         }
       },

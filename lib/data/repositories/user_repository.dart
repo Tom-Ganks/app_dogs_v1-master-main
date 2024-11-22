@@ -5,6 +5,8 @@ import 'package:crypto/crypto.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '../../core/database_helper.dart';
+
 class UserRepository {
   Future<Database> initDb() async {
     return openDatabase(
@@ -14,28 +16,28 @@ class UserRepository {
   }
 
   Future<bool> emailExists(String email) async {
-    final db = await initDb();
+    final db = await DatabaseHelper.initDb();
     final result =
-        await db.query('pessoas', where: 'email = ?', whereArgs: [email]);
+        await db.query('pessoa', where: 'email = ?', whereArgs: [email]);
     return result.isNotEmpty;
   }
 
   Future<bool> userExistsByIdPessoa(int idPessoa) async {
-    final db = await initDb();
+    final db = await DatabaseHelper.initDb();
     final result =
-        await db.query('login', where: 'id_pessoa = ?', whereArgs: [idPessoa]);
+        await db.query('login', where: 'idpessoa = ?', whereArgs: [idPessoa]);
     return result.isNotEmpty;
   }
 
   insertUser(UserModel user) async {
-    final db = await initDb();
+    final db = await DatabaseHelper.initDb();
     final encryptedPassword =
         sha256.convert(utf8.encode(user.password)).toString();
     await db.insert('login', user.toMap()..['password'] = encryptedPassword);
   }
 
   Future<bool> verifyLogin(String username, String password) async {
-    final db = await initDb();
+    final db = await DatabaseHelper.initDb();
     final encryptedPassword = sha256.convert(utf8.encode(password)).toString();
     final result = await db.query('login',
         where: 'username = ? AND password = ?',

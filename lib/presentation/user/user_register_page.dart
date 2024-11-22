@@ -10,10 +10,11 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
-  final _usernameController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class _RegisterPageState extends State<RegisterPage> {
             children: [
               // Campo de E-mail
               TextFormField(
-                controller: _emailController,
+                controller: emailController,
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.email),
                   border: OutlineInputBorder(
@@ -46,7 +47,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
               // Campo de Username
               TextFormField(
-                controller: _usernameController,
+                controller: usernameController,
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.person),
                   border: OutlineInputBorder(
@@ -61,11 +62,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   return null;
                 },
               ),
-              const SizedBox(height: 10), // Espaço entre os campos
-
-              // Campo de Senha
+              const SizedBox(height: 10),
               TextFormField(
-                controller: _passwordController,
+                controller: passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.lock),
@@ -81,9 +80,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   return null;
                 },
               ),
-              const SizedBox(height: 20), // Espaço antes do botão
-
-              // Botão de Cadastro
+              const SizedBox(height: 20),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   iconColor: Colors.teal,
@@ -91,38 +88,19 @@ class _RegisterPageState extends State<RegisterPage> {
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    // Crie um objeto usuário
-                    User user = User(
-                      email: _emailController.text,
-                      username: _usernameController.text,
-                      password: _passwordController.text,
-                    );
-
-                    // Salve o usuário no banco de dados
-                    DatabaseHelper().createUser(user);
-
-                    // Navegue para a página de login
-                    Navigator.pushNamed(context, '/login');
-                  }
-                },
+                onPressed: () {},
                 child: const Padding(
                   padding: EdgeInsets.all(15.0),
                   child: Text('Cadastrar'),
                 ),
               ),
-              const SizedBox(height: 10), // Espaço antes do texto
-
-              // Texto para login
+              const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text('Já tem conta? '),
                   GestureDetector(
-                    onTap: () {
-                      // Navegar para a página de login
-                    },
+                    onTap: () {},
                     child: const Text(
                       'Clique aqui para entrar',
                       style: TextStyle(color: Colors.blue),
