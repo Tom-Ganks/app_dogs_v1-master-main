@@ -12,7 +12,7 @@ class PessoaRepository {
     );
   }
 
-  Future<List<Pessoa>> getPessoas() async {
+  Future<List<Pessoa>> getPessoa() async {
     final db = await DatabaseHelper.initDb();
     final List<Map<String, Object?>> pessoaMaps = await db.query('pessoa');
     return pessoaMaps.map((map) {
@@ -32,7 +32,7 @@ class PessoaRepository {
   Future<void> updatePessoa(Pessoa pessoa) async {
     final db = await DatabaseHelper.initDb();
     await db.update(
-      'pessoas',
+      'pessoa',
       pessoa.toMap(),
       where: 'id = ?',
       whereArgs: [pessoa.id],
@@ -42,7 +42,7 @@ class PessoaRepository {
   Future<void> deletePessoa(int id) async {
     final db = await DatabaseHelper.initDb();
     await db.delete(
-      'pessoas',
+      'pessoa',
       where: 'id = ?',
       whereArgs: [id],
     );

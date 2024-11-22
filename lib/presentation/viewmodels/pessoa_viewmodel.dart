@@ -11,8 +11,8 @@ class PessoaViwemodel {
     await repository.insertPessoa(pessoa);
   }
 
-  Future<List<Pessoa>> getPessoas() async {
-    return await repository.getPessoas();
+  Future<List<Pessoa>> getPessoa() async {
+    return await repository.getPessoa();
   }
 
   Future<void> updatePessoa(Pessoa pessoa) async {

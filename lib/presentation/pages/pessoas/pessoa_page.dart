@@ -25,7 +25,7 @@ class PessoaPageState extends State<PessoaPage> {
   }
 
   Future<void> _loadPessoas() async {
-    _pessoas = await _viewModel.getPessoas();
+    _pessoas = await _viewModel.getPessoa();
     if (mounted) {
       setState(() {});
     }
