@@ -23,10 +23,10 @@ class _LoginPageState extends State<LoginPage> {
   // Função de Login
   loginUser() async {
     if (_formKey.currentState?.validate() ?? false) {
-      final usuario = usernameController.text;
-      final senha = passwordController.text;
+      final username = usernameController.text;
+      final password = passwordController.text;
 
-      final loginSuccess = await userViewmodel.loginUser(usuario, senha);
+      final loginSuccess = await userViewmodel.loginUser(username, password);
 
       if (mounted) {
         if (loginSuccess) {
@@ -36,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Usuário ou senha incorreto.')),
+            const SnackBar(content: Text('Usuário ou password incorreto.')),
           );
         }
       }
