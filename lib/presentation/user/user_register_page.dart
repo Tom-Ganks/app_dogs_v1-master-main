@@ -1,6 +1,7 @@
+import 'package:app_dogs/data/repositories/user_repository.dart';
+import 'package:app_dogs/presentation/viewmodels/user_viewmodel.dart';
 import 'package:flutter/material.dart';
-
-import '../../core/database_helper.dart';
+import 'package:app_dogs/presentation/user/login_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -13,8 +14,40 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
+  final TextEditingController confirmpasswordController =
       TextEditingController();
+  final UserViewmodel userViewmodel = UserViewmodel(UserRepository());
+
+  final _formKey = GlobalKey<FormState>();
+
+  // Função de registro
+  registerUser() async {
+    if (_formKey.currentState?.validate() ?? false) {
+      final email = emailController.text;
+      final username = usernameController.text;
+      final password = passwordController.text;
+
+      final message =
+          await userViewmodel.registerUser(email, username, password);
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(message),
+          backgroundColor:
+              message.contains("Sucesso") ? Colors.green : Colors.red,
+        ));
+
+        if (message.contains("Sucesso")) {
+          // Navegar para a tela de login ou página principal
+          // Substitua loginPage com a sua tela de login
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const LoginPage()),
+          );
+        }
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +59,6 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Campo de E-mail
               TextFormField(
                 controller: emailController,
                 decoration: InputDecoration(
@@ -34,18 +66,16 @@ class _RegisterPageState extends State<RegisterPage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  labelText: 'E-mail',
+                  labelText: 'email',
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Insira seu e-mail';
+                    return 'Insira seu email';
                   }
                   return null;
                 },
               ),
-              const SizedBox(height: 10), // Espaço entre os campos
-
-              // Campo de Username
+              const SizedBox(height: 10),
               TextFormField(
                 controller: usernameController,
                 decoration: InputDecoration(
@@ -71,11 +101,31 @@ class _RegisterPageState extends State<RegisterPage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  labelText: 'Senha',
+                  labelText: 'password',
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Insira sua senha';
+                    return 'Insira sua password';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: confirmpasswordController,
+                obscureText: true,
+                decoration: const InputDecoration(
+                  labelText: 'Confirmar Senha',
+                  border: OutlineInputBorder(),
+                  contentPadding: EdgeInsets.all(16),
+                  prefixIcon: Icon(Icons.lock),
+                ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Confirme sua senha';
+                  }
+                  if (value != passwordController.text) {
+                    return 'Senhas não coincidem';
                   }
                   return null;
                 },

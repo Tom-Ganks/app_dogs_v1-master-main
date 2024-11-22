@@ -36,7 +36,7 @@ class DatabaseHelper {
               'login TEXT NOT NULL UNIQUE, '
               'password TEXT NOT NULL, '
               'idpessoa INTEGER NOT NULL UNIQUE, '
-              'FOREIGN KEY (id_pessoa) REFERENCES pessoa(id))');
+              'FOREIGN KEY (idpessoa) REFERENCES pessoa(id))');
         }
       },
     );
