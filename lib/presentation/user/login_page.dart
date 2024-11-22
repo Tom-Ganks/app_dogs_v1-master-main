@@ -36,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Usuário ou password incorreto.')),
+            const SnackBar(content: Text('Usuário ou senha incorreto.')),
           );
         }
       }
