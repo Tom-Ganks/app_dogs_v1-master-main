@@ -40,7 +40,7 @@ class MainHomePage extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         ElevatedButton.icon(
-          icon: const Icon(Icons.pets),
+          icon: const Icon(Icons.people),
           label: const Text('Acessar Clientes'),
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.teal,
