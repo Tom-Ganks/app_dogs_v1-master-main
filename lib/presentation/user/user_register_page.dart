@@ -7,10 +7,10 @@ class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<RegisterPage> createState() => RegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class RegisterPageState extends State<RegisterPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -38,8 +38,6 @@ class _RegisterPageState extends State<RegisterPage> {
         ));
 
         if (message.contains("Sucesso")) {
-          // Navegar para a tela de login ou página principal
-          // Substitua loginPage com a sua tela de login
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => const LoginPage()),
@@ -66,11 +64,11 @@ class _RegisterPageState extends State<RegisterPage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  labelText: 'email',
+                  labelText: 'E-mail',
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Insira seu email';
+                    return 'Insira seu e-mail';
                   }
                   return null;
                 },
@@ -101,11 +99,11 @@ class _RegisterPageState extends State<RegisterPage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  labelText: 'password',
+                  labelText: 'Senha',
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Insira sua password';
+                    return 'Insira sua senha';
                   }
                   return null;
                 },
@@ -138,7 +136,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: registerUser,
                 child: const Padding(
                   padding: EdgeInsets.all(15.0),
                   child: Text('Cadastrar'),
@@ -149,11 +147,20 @@ class _RegisterPageState extends State<RegisterPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text('Já tem conta? '),
-                  GestureDetector(
-                    onTap: () {},
-                    child: const Text(
-                      'Clique aqui para entrar',
-                      style: TextStyle(color: Colors.blue),
+                  MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const LoginPage()),
+                        );
+                      },
+                      child: const Text(
+                        'Clique aqui para entrar',
+                        style: TextStyle(color: Colors.blue),
+                      ),
                     ),
                   ),
                 ],
